@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-deployment
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: consumer:0.0.1-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: camel.component.rabbitmq.hostname
+          value: rabbitmq-service

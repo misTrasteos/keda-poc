@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer-deployment
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+      - name: producer
+        image: producer:0.0.1-SNAPSHOT
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: camel.component.rabbitmq.hostname
+          value: rabbitmq-service
+        - name: camel.component.timer.period
+          value: '500'
